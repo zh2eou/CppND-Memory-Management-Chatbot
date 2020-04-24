@@ -6,12 +6,13 @@ GraphNode::GraphNode(int id)
     _id = id;
 }
 
+// Can probably remove this entirely in the future
 GraphNode::~GraphNode()
 {
     //// STUDENT CODE
     ////
 
-    delete _chatBot; 
+    // delete _chatBot; 
 
     ////
     //// EOF STUDENT CODE
