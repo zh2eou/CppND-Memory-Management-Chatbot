@@ -42,11 +42,47 @@ ChatBot::~ChatBot()
     }
 }
 
-//// STUDENT CODE
-////
+ChatBot::ChatBot(const ChatBot &chatbot) 
+{
+    std::cout << "ChatBot Copy Constructor: instance " << &chatbot << " to instance " << this << std::endl;
 
-////
-//// EOF STUDENT CODE
+    // copy image
+    _image = new wxBitmap(*chatbot._image); 
+
+    // set data handles from original
+    _chatLogic = _chatLogic;
+    _rootNode = _rootNode;
+    _currentNode = _currentNode;
+}
+
+ChatBot::ChatBot(ChatBot &&chatbot)
+{
+    std::cout << "ChatBot Move Constructor: instance " << &chatbot << " to instance " << this << std::endl;
+
+    // set data handles from original
+    _image = chatbot._image;
+    _chatLogic = chatbot._chatLogic;
+    _rootNode = chatbot._rootNode;
+    _currentNode = chatbot._currentNode;
+
+    // invalidate original data handles
+    chatbot._image = nullptr;
+    chatbot._chatLogic = nullptr;
+    chatbot._rootNode = nullptr;
+    chatbot._currentNode = nullptr;
+}
+
+ChatBot &ChatBot::operator=(const ChatBot &chatbot)
+{
+    // use copy constructor
+    return *this = ChatBot(chatbot);
+}
+
+ChatBot &ChatBot::operator=(ChatBot &&chatbot)
+{
+    // use move constructor
+    return *this = ChatBot(chatbot);
+}
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
 {
