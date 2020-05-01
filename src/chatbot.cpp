@@ -76,14 +76,40 @@ ChatBot::ChatBot(ChatBot &&chatbot)
 
 ChatBot &ChatBot::operator=(const ChatBot &chatbot)
 {
-    // use copy constructor
-    return *this = ChatBot(chatbot);
+    std::cout << "ChatBot Copy Assign Constructor \n";
+    if (&chatbot == this)
+    {
+        return *this;
+    }
+    if (chatbot._image != NULL && chatbot._image != nullptr)
+    {
+        // using NULL since that's what wxWidgets uses
+        _image = new wxBitmap(*chatbot._image);
+    }
+    _currentNode = chatbot._currentNode;
+    _rootNode = chatbot._rootNode;
+    _chatLogic = chatbot._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    return *this;
 }
 
 ChatBot &ChatBot::operator=(ChatBot &&chatbot)
 {
-    // use move constructor
-    return *this = ChatBot(chatbot);
+    std::cout << "ChatBot Move Assignment \n";
+    if (&chatbot == this)
+    {
+        return *this;
+    }
+    _image = chatbot._image;
+    _currentNode = chatbot._currentNode;
+    _rootNode = chatbot._rootNode;
+    _chatLogic = chatbot._chatLogic;
+    _chatLogic->SetChatbotHandle(this);
+    chatbot._image = nullptr;
+    chatbot._currentNode = nullptr;
+    chatbot._rootNode = nullptr;
+    chatbot._chatLogic = nullptr;
+    return *this;
 }
 
 void ChatBot::ReceiveMessageFromUser(std::string message)
