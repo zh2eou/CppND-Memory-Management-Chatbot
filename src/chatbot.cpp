@@ -53,17 +53,19 @@ ChatBot::ChatBot(const ChatBot &chatbot)
     _chatLogic = _chatLogic;
     _rootNode = _rootNode;
     _currentNode = _currentNode;
+    _chatLogic->SetChatbotHandle(this);
 }
 
 ChatBot::ChatBot(ChatBot &&chatbot)
 {
     std::cout << "ChatBot Move Constructor: instance " << &chatbot << " to instance " << this << std::endl;
-
+    
     // set data handles from original
     _image = chatbot._image;
     _chatLogic = chatbot._chatLogic;
     _rootNode = chatbot._rootNode;
     _currentNode = chatbot._currentNode;
+    _chatLogic->SetChatbotHandle(this);
 
     // invalidate original data handles
     chatbot._image = nullptr;
